@@ -6,9 +6,11 @@ from core.target import GeminiTarget, OpenAICompatibleTarget
 from main import PROVIDERS
 
 TARGETS = [
-    ("gemini", "gemini-2.5-flash"),
-    ("groq", "llama-3.1-8b-instant"),
-    ("nvidia", "meta/llama-3.3-70b-instruct"),
+    ("groq", "openai/gpt-oss-20b"),
+    ("nvidia", "openai/gpt-oss-120b"),
+    ("nvidia", "minimaxai/minimax-m3"),
+    ("nvidia", "nvidia/nemotron-3-nano-30b-a3b"),
+    ("nvidia", "google/gemma-4-31b-it"),
 ]
 
 def build_target(provider: str, model: str):

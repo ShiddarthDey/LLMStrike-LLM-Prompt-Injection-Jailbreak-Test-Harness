@@ -46,7 +46,7 @@ class OpenAICompatibleTarget(Target):
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}]
         }
-        res = requests.post(f"{self.base_url}/chat/completions", headers=headers, json=payload, timeout=30)
+        res = requests.post(f"{self.base_url}/chat/completions", headers=headers, json=payload, timeout=90)
         res.raise_for_status()
         data = res.json()
         return data["choices"][0]["message"]["content"]
