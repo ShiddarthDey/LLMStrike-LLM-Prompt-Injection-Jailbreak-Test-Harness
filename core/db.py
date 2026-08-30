@@ -12,6 +12,7 @@ def init_db(db_path: str = DB_PATH):
         CREATE TABLE IF NOT EXISTS results (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             timestamp TEXT NOT NULL,
+            model TEXT,
             attack_id TEXT,
             category TEXT,
             prompt TEXT,
@@ -24,13 +25,13 @@ def init_db(db_path: str = DB_PATH):
     conn.commit()
     conn.close()
 
-def save_result(attack_id: str, category: str, prompt: str, response: str, error: str = None, verdict: str = None, severity: str = None, db_path: str = DB_PATH):
+def save_result(attack_id: str, category: str, prompt: str, response: str, error: str = None, verdict: str = None, severity: str = None, model: str = None, db_path: str = DB_PATH):
     ts = datetime.now(timezone.utc).isoformat()
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO results (timestamp, attack_id, category, prompt, response, error, verdict, severity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-        (ts, attack_id, category, prompt, response, error, verdict, severity)
+        "INSERT INTO results (timestamp, model, attack_id, category, prompt, response, error, verdict, severity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (ts, model, attack_id, category, prompt, response, error, verdict, severity)
     )
     conn.commit()
     conn.close()
