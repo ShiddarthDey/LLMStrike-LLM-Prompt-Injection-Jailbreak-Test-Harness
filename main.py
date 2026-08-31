@@ -3,6 +3,7 @@ import argparse
 from core.db import init_db
 from core.runner import run_pack
 from core.target import GeminiTarget, OpenAICompatibleTarget
+from core.report import generate_report
 
 PROVIDERS = {
     "gemini": {
@@ -27,7 +28,12 @@ def main():
     parser.add_argument("--provider", choices=list(PROVIDERS.keys()), default="gemini", help="Target LLM provider")
     parser.add_argument("--model", default=None, help="Target model name")
     parser.add_argument("--delay", type=float, default=1.0, help="Delay in seconds between attacks")
+    parser.add_argument("--report", action="store_true", help="Generate HTML security assessment report")
     args = parser.parse_args()
+
+    if args.report:
+        generate_report()
+        return
 
     init_db()
     cfg = PROVIDERS[args.provider]
